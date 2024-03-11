@@ -1,0 +1,21 @@
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        map<char,bool> mp;
+        string ans="";
+        for(int i=0;i<order.size();i++){
+            mp[order[i]]=true;
+            char temp=order[i];
+            for(int j=0;j<s.size();j++){
+                if(s[j]==temp){
+                    ans.push_back(temp);
+                }
+            }
+        }
+        for(int i=0;i<s.size();i++){
+            if(mp[s[i]]==false)
+            ans.push_back(s[i]);
+        }
+        return ans;
+    }
+};
