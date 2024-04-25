@@ -1,0 +1,49 @@
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+
+class Solution {
+public:
+    // Static member function for envelope comparison
+    static bool comp(const vector<int>& a, const vector<int>& b) {
+        if (a[0] == b[0]) {
+            // If widths are equal, sort by height in descending order
+            return a[1] > b[1];
+        } else {
+            // Sort by width in ascending order
+            return a[0] < b[0];
+        }
+    }
+  int solve(vector<int>& temp,int n){
+    vector<int> v;
+    v.push_back(temp[0]);
+    for(int i=1;i<n;i++){
+        if(temp[i]>v.back()){
+            v.push_back(temp[i]);
+        }
+        else{
+            int ind=lower_bound(v.begin(),v.end(),temp[i])-v.begin();
+            v[ind]=temp[i];
+        }
+    }
+    return v.size();
+  }
+    int maxEnvelopes(vector<vector<int>>& envelopes) {
+        // Sort envelopes using the comp function as the comparator
+        sort(envelopes.begin(), envelopes.end(), comp);
+
+        // Debugging: Print sorted envelopes
+        vector<int> temp;
+        for (auto& envelope : envelopes) {
+           // cout << envelope[0] << " " << envelope[1] << endl;
+            temp.push_back(envelope[1]);
+        }
+       int n=temp.size();
+       return solve(temp,n);
+
+        // Placeholder return value (actual logic to be implemented)
+        return 0;
+    }
+};
