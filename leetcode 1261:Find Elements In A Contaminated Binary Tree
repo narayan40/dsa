@@ -1,0 +1,35 @@
+#include <unordered_map>
+#include <iostream>
+using namespace std;
+
+class FindElements {
+public:
+    unordered_map<int, bool> mp;
+
+    FindElements(TreeNode* root) {
+        if (root != nullptr) {
+            root->val = 0;
+            mp[0] = true;
+            recover(root);
+        }
+    }
+    
+    void recover(TreeNode* node) {
+        if (node == nullptr) return;
+
+        if (node->left) {
+            node->left->val = 2 * node->val + 1;
+            mp[node->left->val] = true;
+            recover(node->left);
+        }
+        if (node->right) {
+            node->right->val = 2 * node->val + 2;
+            mp[node->right->val] = true;
+            recover(node->right);
+        }
+    }
+    
+    bool find(int target) {
+        return mp.find(target) != mp.end();
+    }
+};
